@@ -2,12 +2,15 @@ const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
 const fs = require('fs');
 
-const dataDir = path.join(__dirname, '..', '..', 'data');
+const dbPath = process.env.DB_PATH 
+  ? path.resolve(process.env.DB_PATH)
+  : path.join(__dirname, '..', '..', 'data', 'elderly_care.db');
+
+const dataDir = path.dirname(dbPath);
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-const dbPath = path.join(dataDir, 'elderly_care.db');
 const db = new DatabaseSync(dbPath);
 
 // Enable foreign keys and WAL mode for high performance
