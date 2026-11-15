@@ -10,6 +10,15 @@ const register = (req, res) => {
     return res.status(400).json({ error: 'Email, password, and full name are required.' });
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.trim())) {
+    return res.status(400).json({ error: 'Please provide a valid email address.' });
+  }
+
+  if (password.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+  }
+
   const existing = get('SELECT id FROM users WHERE email = ?', [email.toLowerCase().trim()]);
   if (existing) {
     return res.status(409).json({ error: 'An account with this email already exists.' });

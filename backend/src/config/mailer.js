@@ -17,7 +17,7 @@ if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
 }
 
 const sendMail = async ({ to, subject, html, text }) => {
-  if (transporter) {
+  if (transporter && process.env.NODE_ENV !== 'test') {
     try {
       const info = await transporter.sendMail({
         from: `"Elderly Care Platform" <${process.env.EMAIL_USER}>`,

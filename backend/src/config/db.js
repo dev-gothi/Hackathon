@@ -13,8 +13,14 @@ if (!fs.existsSync(dataDir)) {
 
 const db = new DatabaseSync(dbPath);
 
-// Enable foreign keys and WAL mode for high performance
-db.exec('PRAGMA foreign_keys = ON;');
+// Enable foreign keys and high-performance WAL mode
+db.exec(`
+  PRAGMA foreign_keys = ON;
+  PRAGMA journal_mode = WAL;
+  PRAGMA synchronous = NORMAL;
+  PRAGMA cache_size = -64000;
+  PRAGMA temp_store = MEMORY;
+`);
 
 // Initialize tables
 db.exec(`
@@ -134,10 +140,17 @@ db.exec(`
     FOREIGN KEY (care_profile_id) REFERENCES care_profiles(id) ON DELETE CASCADE
   );
 
-  -- Performance indices
+  -- Performance indices for rapid lookups and zero full-table scans
   CREATE INDEX IF NOT EXISTS idx_profile_members_user ON profile_members(user_id);
+  CREATE INDEX IF NOT EXISTS idx_profile_members_profile ON profile_members(care_profile_id);
   CREATE INDEX IF NOT EXISTS idx_dose_logs_status_time ON dose_logs(status, scheduled_time);
+  CREATE INDEX IF NOT EXISTS idx_dose_logs_profile_time ON dose_logs(care_profile_id, scheduled_time);
+  CREATE INDEX IF NOT EXISTS idx_dose_logs_schedule ON dose_logs(medication_schedule_id);
   CREATE INDEX IF NOT EXISTS idx_medications_profile ON medications(care_profile_id, is_active);
+  CREATE INDEX IF NOT EXISTS idx_med_schedules_med ON medication_schedules(medication_id);
+  CREATE INDEX IF NOT EXISTS idx_appointments_profile_time ON appointments(care_profile_id, appointment_datetime);
+  CREATE INDEX IF NOT EXISTS idx_daily_checkins_profile_date ON daily_checkins(care_profile_id, checkin_date);
+  CREATE INDEX IF NOT EXISTS idx_notification_logs_profile ON notification_logs(care_profile_id, sent_at);
 `);
 
 module.exports = {
