@@ -35,7 +35,7 @@ export const AnalyticsPage = () => {
   const { summary, patterns_by_time, medication_breakdown, timeline_14d } = data || {};
 
   return (
-    <div className="container" style={{ padding: '32px 20px 80px' }}>
+    <div className="container page-container" style={{ padding: '24px 20px 80px' }}>
       <div style={{ marginBottom: '28px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a' }}>
           Adherence Analytics & Health Trends
@@ -46,7 +46,7 @@ export const AnalyticsPage = () => {
       </div>
 
       {/* Main KPI Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
+      <div className="kpi-grid">
         
         {/* 7-Day Rate */}
         <div style={{ background: '#ffffff', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
@@ -97,7 +97,7 @@ export const AnalyticsPage = () => {
       </div>
 
       {/* Two Column Section: Time of Day Patterns + 14-Day Trend */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px', marginBottom: '32px' }}>
+      <div className="analytics-two-col">
         
         {/* Time-of-Day Missed Dose Patterns */}
         <div style={{ background: '#ffffff', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
@@ -185,52 +185,54 @@ export const AnalyticsPage = () => {
           </h3>
         </div>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
-          <thead>
-            <tr style={{ background: '#f8fafc', color: '#64748b', fontSize: '12px', textTransform: 'uppercase' }}>
-              <th style={{ padding: '14px 24px' }}>Medication</th>
-              <th style={{ padding: '14px 24px' }}>Dosage</th>
-              <th style={{ padding: '14px 24px' }}>Scheduled (30d)</th>
-              <th style={{ padding: '14px 24px' }}>Taken</th>
-              <th style={{ padding: '14px 24px' }}>Missed</th>
-              <th style={{ padding: '14px 24px' }}>Adherence Rate</th>
-            </tr>
-          </thead>
-          <tbody>
-            {medication_breakdown?.map((med, idx) => (
-              <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                <td style={{ padding: '16px 24px', fontWeight: 700, color: '#0f172a' }}>
-                  {med.medication_name}
-                </td>
-                <td style={{ padding: '16px 24px', color: '#64748b' }}>
-                  {med.dosage}
-                </td>
-                <td style={{ padding: '16px 24px', color: '#334155' }}>
-                  {med.total_scheduled}
-                </td>
-                <td style={{ padding: '16px 24px', color: '#16a34a', fontWeight: 600 }}>
-                  {med.taken_count}
-                </td>
-                <td style={{ padding: '16px 24px', color: med.missed_count > 0 ? '#ef4444' : '#64748b', fontWeight: med.missed_count > 0 ? 700 : 400 }}>
-                  {med.missed_count}
-                </td>
-                <td style={{ padding: '16px 24px' }}>
-                  <span style={{
-                    display: 'inline-block',
-                    padding: '3px 10px',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                    fontWeight: 700,
-                    background: med.adherence_rate >= 90 ? '#d1fae5' : (med.adherence_rate >= 75 ? '#fef3c7' : '#fee2e2'),
-                    color: med.adherence_rate >= 90 ? '#065f46' : (med.adherence_rate >= 75 ? '#92400e' : '#991b1b')
-                  }}>
-                    {med.adherence_rate}%
-                  </span>
-                </td>
+        <div className="table-responsive-wrapper">
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
+            <thead>
+              <tr style={{ background: '#f8fafc', color: '#64748b', fontSize: '12px', textTransform: 'uppercase' }}>
+                <th style={{ padding: '14px 24px' }}>Medication</th>
+                <th style={{ padding: '14px 24px' }}>Dosage</th>
+                <th style={{ padding: '14px 24px' }}>Scheduled (30d)</th>
+                <th style={{ padding: '14px 24px' }}>Taken</th>
+                <th style={{ padding: '14px 24px' }}>Missed</th>
+                <th style={{ padding: '14px 24px' }}>Adherence Rate</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {medication_breakdown?.map((med, idx) => (
+                <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                  <td style={{ padding: '16px 24px', fontWeight: 700, color: '#0f172a' }}>
+                    {med.medication_name}
+                  </td>
+                  <td style={{ padding: '16px 24px', color: '#64748b' }}>
+                    {med.dosage}
+                  </td>
+                  <td style={{ padding: '16px 24px', color: '#334155' }}>
+                    {med.total_scheduled}
+                  </td>
+                  <td style={{ padding: '16px 24px', color: '#16a34a', fontWeight: 600 }}>
+                    {med.taken_count}
+                  </td>
+                  <td style={{ padding: '16px 24px', color: med.missed_count > 0 ? '#ef4444' : '#64748b', fontWeight: med.missed_count > 0 ? 700 : 400 }}>
+                    {med.missed_count}
+                  </td>
+                  <td style={{ padding: '16px 24px' }}>
+                    <span style={{
+                      display: 'inline-block',
+                      padding: '3px 10px',
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                      fontWeight: 700,
+                      background: med.adherence_rate >= 90 ? '#d1fae5' : (med.adherence_rate >= 75 ? '#fef3c7' : '#fee2e2'),
+                      color: med.adherence_rate >= 90 ? '#065f46' : (med.adherence_rate >= 75 ? '#92400e' : '#991b1b')
+                    }}>
+                      {med.adherence_rate}%
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>

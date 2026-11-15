@@ -65,10 +65,10 @@ export const ElderlyModePage = () => {
   const takenDoses = doses.filter(d => d.status === 'taken');
 
   return (
-    <div style={{
+    <div className="page-container" style={{
       minHeight: 'calc(100vh - 66px)',
       background: '#f8fafc',
-      padding: '28px 16px 60px'
+      padding: '24px 14px 90px'
     }}>
       <div style={{ maxWidth: '720px', margin: '0 auto' }}>
         

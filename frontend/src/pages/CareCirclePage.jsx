@@ -64,7 +64,7 @@ export const CareCirclePage = () => {
   };
 
   return (
-    <div className="container" style={{ padding: '32px 20px 80px' }}>
+    <div className="container page-container" style={{ padding: '24px 20px 80px' }}>
       
       {/* Header */}
       <div style={{ marginBottom: '28px' }}>
@@ -179,6 +179,7 @@ export const CareCirclePage = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
+                  flexWrap: 'wrap',
                   gap: '16px',
                   boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
                 }}

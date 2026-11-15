@@ -190,8 +190,8 @@ export const Navbar = ({ currentTab, setCurrentTab, onOpenCreateProfile, onOpenJ
           )}
         </div>
 
-        {/* Center: Navigation Tabs */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '3px', flexWrap: 'wrap' }}>
+        {/* Center: Navigation Tabs (Desktop) */}
+        <nav className="desktop-nav">
           {[
             { id: 'dashboard', label: 'Dashboard', icon: Heart },
             { id: 'medications', label: 'Medications', icon: Pill },
@@ -230,7 +230,7 @@ export const Navbar = ({ currentTab, setCurrentTab, onOpenCreateProfile, onOpenJ
         </nav>
 
         {/* Right: Cron Simulator, Role Badge & Logout */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           {/* Simulate Cron Button */}
           <button
             onClick={handleTriggerCron}
@@ -240,7 +240,7 @@ export const Navbar = ({ currentTab, setCurrentTab, onOpenCreateProfile, onOpenJ
               display: 'flex',
               alignItems: 'center',
               gap: '5px',
-              padding: '5px 10px',
+              padding: '6px 10px',
               borderRadius: '8px',
               fontSize: '11px',
               fontWeight: 700,
@@ -249,12 +249,12 @@ export const Navbar = ({ currentTab, setCurrentTab, onOpenCreateProfile, onOpenJ
               border: '1px solid #fde68a'
             }}
           >
-            <RefreshCw size={12} className={cronRunning ? 'animate-spin' : ''} />
-            <span>{cronFeedback || 'Simulate Cron'}</span>
+            <RefreshCw size={13} className={cronRunning ? 'animate-spin' : ''} />
+            <span className="cron-btn-text">{cronFeedback || 'Cron'}</span>
           </button>
 
-          {/* User info & role badge */}
-          <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+          {/* User info & role badge (Desktop) */}
+          <div className="user-role-badge" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
             <span style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a', lineHeight: 1.1 }}>
               {user?.full_name?.split(' ')[0]}
             </span>
@@ -288,6 +288,34 @@ export const Navbar = ({ currentTab, setCurrentTab, onOpenCreateProfile, onOpenJ
           </button>
         </div>
       </div>
+
+      {/* Mobile Bottom Navigation Bar */}
+      <nav className="mobile-bottom-nav">
+        {[
+          { id: 'dashboard', label: 'Home', icon: Heart },
+          { id: 'medications', label: 'Meds', icon: Pill },
+          { id: 'carecircle', label: 'Circle', icon: Users },
+          { id: 'analytics', label: 'Analytics', icon: BarChart2 },
+          { id: 'elderly', label: 'Elderly', icon: Eye, special: true }
+        ].map(tab => {
+          const Icon = tab.icon;
+          const isActive = currentTab === tab.id;
+          let className = 'mobile-nav-item';
+          if (isActive) {
+            className += tab.special ? ' active-elderly' : ' active';
+          }
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setCurrentTab(tab.id)}
+              className={className}
+            >
+              <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
+      </nav>
     </header>
   );
 };

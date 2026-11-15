@@ -100,7 +100,7 @@ export const DashboardPage = ({ onNavigateTab, onOpenAddAppointment, onOpenAssis
   }
 
   return (
-    <div className="container" style={{ padding: '32px 20px 80px' }}>
+    <div className="container page-container" style={{ padding: '24px 20px 80px' }}>
       
       {/* 🚨 CRITICAL ESCALATION BANNER */}
       {activeEscalations.length > 0 && (
@@ -113,7 +113,8 @@ export const DashboardPage = ({ onNavigateTab, onOpenAddAppointment, onOpenAssis
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '20px',
+          flexWrap: 'wrap',
+          gap: '16px',
           boxShadow: '0 10px 25px -5px rgba(239, 68, 68, 0.25)'
         }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
@@ -180,7 +181,7 @@ export const DashboardPage = ({ onNavigateTab, onOpenAddAppointment, onOpenAssis
       )}
 
       {/* Overview KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
+      <div className="kpi-grid">
         
         {/* Today's Adherence Card */}
         <div style={{
@@ -275,11 +276,11 @@ export const DashboardPage = ({ onNavigateTab, onOpenAddAppointment, onOpenAssis
       </div>
 
       {/* Main Grid: Today's Timeline (Left 65%) + Wellbeing & Appointments (Right 35%) */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.9fr 1.1fr', gap: '28px' }}>
+      <div className="dashboard-main-grid">
         
         {/* Left Column: Today's Medication Timeline */}
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+          <div className="page-header-row" style={{ marginBottom: '18px' }}>
             <div>
               <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a' }}>Today's Medication Timeline</h2>
               <p style={{ fontSize: '13px', color: '#64748b', marginTop: '2px' }}>
@@ -324,6 +325,7 @@ export const DashboardPage = ({ onNavigateTab, onOpenAddAppointment, onOpenAssis
                 return (
                   <div
                     key={dose.dose_log_id}
+                    className="dose-card-container"
                     style={{
                       background: '#ffffff',
                       borderRadius: '14px',
@@ -331,16 +333,12 @@ export const DashboardPage = ({ onNavigateTab, onOpenAddAppointment, onOpenAssis
                         ? '2px solid #ef4444' 
                         : (isTaken ? '1px solid #e2e8f0' : '1px solid #cbd5e1'),
                       padding: '18px 20px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: '16px',
                       boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
                       opacity: isTaken ? 0.85 : 1
                     }}
                   >
                     {/* Time + Med Info */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
                       <div style={{
                         padding: '10px 14px',
                         borderRadius: '10px',
@@ -357,7 +355,7 @@ export const DashboardPage = ({ onNavigateTab, onOpenAddAppointment, onOpenAssis
                       </div>
 
                       <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                           <h4 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a' }}>
                             {dose.medication_name}
                           </h4>
@@ -393,7 +391,7 @@ export const DashboardPage = ({ onNavigateTab, onOpenAddAppointment, onOpenAssis
                     </div>
 
                     {/* Action buttons */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div className="dose-card-actions" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       {isTaken ? (
                         <span style={{
                           display: 'inline-flex',

@@ -41,8 +41,8 @@ export const MedicationsPage = ({ onOpenAddMedication }) => {
   };
 
   return (
-    <div className="container" style={{ padding: '32px 20px 80px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+    <div className="container page-container" style={{ padding: '24px 20px 80px' }}>
+      <div className="page-header-row">
         <div>
           <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a' }}>
             {activeProfile?.display_name}'s Medications
@@ -118,7 +118,7 @@ export const MedicationsPage = ({ onOpenAddMedication }) => {
           )}
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '20px' }}>
           {medications.map((med) => (
             <div
               key={med.id}
