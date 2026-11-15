@@ -2,6 +2,9 @@
   "name": "carecircle-platform",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "build": "cd frontend && npm install --include=dev && npm run build && cd ../backend && npm install",
     "start": "node backend/src/server.js",
